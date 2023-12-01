@@ -10,4 +10,4 @@ class PersonForm(UserCreationForm):
 
     class Meta:
         model = Person
-        fields = ('username', 'first_name', 'last_name', 'birth_date', 'profile_image')
+        fields = ('username', 'first_name', 'last_name', 'email', 'birth_date', 'profile_image')
