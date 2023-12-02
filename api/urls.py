@@ -26,9 +26,6 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('profile/', profile, name='profile'),
     path('profile/update/', update_profile, name='update_profile'),
-    # Endpoint for fetching articles
-    path('api/articles/', views.get_articles, name='get_articles'),
-
-    # Endpoint for fetching categories
-    path('api/categories/', views.get_categories, name='get_categories'),
+    path('api/articles/', views.get_articles, name='get_articles'), # Endpoint for fetching articles
+    path('api/categories/', views.get_categories, name='get_categories'), # Endpoint for fetching categories
 ]

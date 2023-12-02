@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',  # Replace with your Vue frontend URL
+    'http://localhost:5173',
 
 ]
 ROOT_URLCONF = 'project.urls'

@@ -37,7 +37,7 @@
         articles: [],
         categories: [],
         selectedCategory: 'All',
-        filteredArticles: [] // Added a property to hold filtered articles
+        filteredArticles: [], // Added a property to hold filtered articles
       };
     },
     mounted() {
@@ -86,26 +86,26 @@
 <style scoped>
   /* Styling for the category navigation bar */
   .nav-bar {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  background-color: #f2f2f2;
-}
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #f2f2f2;
+  }
 
-.nav-bar li {
-  display: inline-block;
-  padding: 10px 20px;
-  cursor: pointer;
-}
+  .nav-bar li {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
 
-.nav-bar li:first-child {
-  margin-left: 0; /* Remove left margin for the first navigation item */
-}
+  .nav-bar li:first-child {
+    margin-left: 0;
+    /* Remove left margin for the first navigation item */
+  }
 
-.nav-bar li:hover {
-  background-color: #ddd;
-}
-
+  .nav-bar li:hover {
+    background-color: #ddd;
+  }
 </style>
