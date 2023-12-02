@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.http import HttpResponse
 from .views import main_spa, sign_up, login_view, profile, update_profile, main_spa
+from . import views 
 
 urlpatterns = [
     path('', main_spa),
@@ -25,4 +26,9 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('profile/', profile, name='profile'),
     path('profile/update/', update_profile, name='update_profile'),
+    # Endpoint for fetching articles
+    path('api/articles/', views.get_articles, name='get_articles'),
+
+    # Endpoint for fetching categories
+    path('api/categories/', views.get_categories, name='get_categories'),
 ]

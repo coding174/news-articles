@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import Person
+from .models import Person, NewsArticle, Category
 
-class PersonAdmin(admin.ModelAdmin):
-    list_display = ('username', 'first_name', 'last_name', 'email', 'date_joined')
+admin.site.register(Person)
 
-admin.site.register(Person, PersonAdmin)
+admin.site.register(NewsArticle)
+admin.site.register(Category)
