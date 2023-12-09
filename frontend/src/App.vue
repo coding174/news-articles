@@ -3,16 +3,16 @@
         <div>
             <router-link
                 class=""
-                :to="{name: 'Main Page'}"
+                :to="{name: 'Articles'}"
             >
-                Main Page
+                Articles
             </router-link>
             |
             <router-link
                 class=""
-                :to="{name: 'Other Page'}"
+                :to="{name: 'Profile'}"
             >
-                Other Page
+                Profile
             </router-link>
         </div>
         <RouterView class="flex-shrink-0" />

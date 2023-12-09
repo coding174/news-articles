@@ -21,7 +21,7 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('profile')
+            return redirect(f'http://localhost:5173/')
     else:
         form = PersonForm()
     return render(request, 'api/spa/sign_up.html', {'form': form})
@@ -31,7 +31,7 @@ def login_view(request):
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            return redirect('profile')
+            return redirect(f'http://localhost:5173/')
     else:
         form = AuthenticationForm()
     return render(request, 'api/spa/login.html', {'form': form})
