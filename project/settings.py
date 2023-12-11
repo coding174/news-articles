@@ -60,9 +60,25 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+SESSION_COOKIE_SAMESITE = None
+
+SESSION_COOKIE_SECURE = False
+
+SESSION_COOKIE_HTTPONLY = False
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 ROOT_URLCONF = 'project.urls'
 
@@ -147,3 +163,5 @@ INTERNAL_IPS = ['127.0.0.1']
 AUTH_USER_MODEL = 'api.Person'
 
 DEBUG = True
+
+LOGIN_URL = '/accounts/login/'

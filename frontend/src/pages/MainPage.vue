@@ -29,9 +29,22 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from "vue";
+  import { defineComponent,  onMounted, computed } from "vue";
+  import { useUserStore } from "../store/userStore";
 
   export default defineComponent({
+    setup() {
+      const userStore = useUserStore();
+
+      // Call fetchUserInfo when the component is mounted or when the user logs in
+      onMounted(() => {
+        userStore.fetchUserInfo();
+      });
+
+      return {
+        user: computed(() => userStore.user),
+      };
+    },
     data() {
       return {
         articles: [],
