@@ -6,13 +6,19 @@
     <link rel="icon" type="image/svg+xml" href="/static/api/spa/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ECS639 Web Programming - Group CW Template</title>
-  <script type="module" crossorigin src="/static/api/spa/assets/index-969bf769.js"></script>
-  <link rel="stylesheet" href="/static/api/spa/assets/index-4e5c0698.css">
+  <script type="module" crossorigin src="/static/api/spa/assets/index-edd0e2fc.js"></script>
+  <link rel="stylesheet" href="/static/api/spa/assets/index-5cb0748f.css">
 </head>
 
 <body>
-    <a href="{% url 'signup' %}">Sign Up</a>
-    <a href="{% url 'login' %}">Login</a>
+    {% if request.user.is_authenticated %}
+        <!-- Content to display when the user is logged in -->
+        <div id="app"></div>
+    {% else %}
+        <!-- Content to display when the user is not logged in -->
+        <a href="{% url 'signup' %}">Sign Up</a>
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
 </body>
 
 </html>

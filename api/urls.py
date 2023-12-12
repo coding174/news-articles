@@ -17,13 +17,14 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from django.http import HttpResponse
-from .views import main_spa, sign_up, login_view, main_spa, person_functions, isUserLoggedIn
+from .views import main_spa, sign_up, login_view, main_spa, person_functions, isUserLoggedIn, logout_view
 from . import views 
 
 urlpatterns = [
     path('', main_spa),
     path('signup/', sign_up, name='signup'),
     path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
     path('api/isUserLoggedIn/', isUserLoggedIn, name='is_user_logged_in'),
     path('api/getPerson/', person_functions, name='get_person'),
     path('api/editPersonData/', person_functions, name='edit_person_data'),

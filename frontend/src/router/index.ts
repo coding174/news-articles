@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // These can be imported from other files
 import MainPage from '../pages/MainPage.vue';
 import Profile from '../pages/Profile.vue';
-import Articles from '../pages/Articles.vue';
+import Logout from '\../pages/Logout.vue';
 
 let base = (import.meta.env.MODE == 'development') ? import.meta.env.BASE_URL : ''
 
@@ -17,8 +17,9 @@ const router = createRouter({
     history: createWebHistory(base),
     routes: [
         { path: '/', name: 'Main Page', component: MainPage },
+        { path: '/articles/', name: 'Article', component: MainPage },
         { path: '/profile/', name: 'Profile', component: Profile },
-        { path: '/articles/', name: 'Articles', component: Articles },
+        { path: '/logout/', name: 'Logout', component: Logout },
     ]
 })
 

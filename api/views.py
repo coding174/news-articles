@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .form import PersonForm
@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from .models import Category, NewsArticle, Person
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import logout
 
 def main_spa(request: HttpRequest) -> HttpResponse:
     return render(request, 'api/spa/index.html', {})
@@ -19,7 +20,7 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             login(request, user)  # This logs in the user after successful signup
-            return redirect(f'http://localhost:5173/')
+            return redirect('/')
     else:
         form = PersonForm()
     return render(request, 'api/spa/sign_up.html', {'form': form})
@@ -37,13 +38,14 @@ def login_view(request):
             if user is not None:
                 # The user credentials are valid, log in the user
                 login(request, user)
-                return redirect(f'http://localhost:5173/')
+                return redirect('/')
     else:
         form = AuthenticationForm()
     return render(request, 'api/spa/login.html', {'form': form})
 
 def isUserLoggedIn(request):
-    return JsonResponse({'message': request.user.is_authenticated})
+    return (request.user.is_authenticated)
+
 # note: @login_required is a decorator that checks if the user is logged in.
 @login_required
 def person_functions(request):
@@ -106,6 +108,10 @@ def handle_profile_image(user, new_image_data, existing_image):
     except Exception as e:
         # Handle any exceptions that may occur during image handling
         raise e
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'api/spa/index.html')
     
 def news(request):
     categories = Category.objects.all()

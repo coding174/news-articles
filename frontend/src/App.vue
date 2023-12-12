@@ -3,7 +3,7 @@
         <div>
             <router-link
                 class=""
-                :to="{name: 'Articles'}"
+                :to="{name: 'Article'}"
             >
                 Articles
             </router-link>
@@ -14,6 +14,13 @@
             >
                 Profile
             </router-link>
+            |
+            <router-link
+                class=""
+                :to="{name: 'Logout'}"
+            >
+                Logout
+            </router-link>
         </div>
         <RouterView class="flex-shrink-0" />
     </main>
@@ -22,10 +29,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { RouterView } from "vue-router";
+import MainPage from "./pages/MainPage.vue";
 
 export default defineComponent({
-    components: { RouterView },
+    components: { RouterView, MainPage},
 });
+
 
 </script>
 

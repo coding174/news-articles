@@ -1,11 +1,11 @@
 export interface Category {
-  id: number;
+  id: string;
   name: string;
 }
 
 export interface Article {
-  id: number;
+  id: number | string;
   title: string;
   content: string;
-  category_id: number; // Adjust according to your actual data structure
+  category_id: number;
 }

@@ -31,6 +31,7 @@
 <script lang="ts">
   import { defineComponent,  onMounted, computed } from "vue";
   import { useUserStore } from "../store/userStore";
+  import { Category, Article } from "../store/type.ts";
 
   export default defineComponent({
     setup() {
@@ -47,10 +48,10 @@
     },
     data() {
       return {
-        articles: [],
-        categories: [],
+        articles: [] as Article[],
+        categories: [] as Category[],
         selectedCategory: 'All',
-        filteredArticles: [], // Added a property to hold filtered articles
+        filteredArticles: [] as Article[], // Added a property to hold filtered articles
       };
     },
     mounted() {
@@ -60,7 +61,7 @@
     },
     methods: {
       fetchArticles() {
-        fetch('http://127.0.0.1:8000/api/articles/')
+        fetch('http://localhost:8000/api/articles/')
           .then(response => response.json())
           .then(data => {
             this.articles = data.articles; // Assuming your API response contains articles
@@ -71,7 +72,7 @@
           });
       },
       fetchCategories() {
-        fetch('http://127.0.0.1:8000/api/categories/')
+        fetch('http://localhost:8000/api/categories/')
           .then(response => response.json())
           .then(data => {
             this.categories = data.categories; // Assuming your API response contains categories
@@ -80,14 +81,14 @@
             console.error('Error fetching categories:', error);
           });
       },
-      filterCategory(categoryId) {
+      filterCategory(categoryId : string) {
         console.log('Selected Category ID:', categoryId);
         if (categoryId === 'All') {
           this.selectedCategory = 'All';
           this.filteredArticles = this.articles; // Show all articles if 'All' is selected
         } else {
           this.selectedCategory = categoryId;
-          this.filteredArticles = this.articles.filter(article => article.category_id === categoryId);
+          this.filteredArticles = this.articles.filter(article => article.category_id === parseInt(categoryId, 10));
         }
         console.log('Selected Category:', this.selectedCategory);
         console.log('Filtered Articles:', this.filteredArticles);

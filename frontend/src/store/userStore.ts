@@ -60,6 +60,29 @@ export const useUserStore = defineStore('user', {
     clearUser() {
       this.user = null;
     },
+
+    async logout() {
+      try {
+        const response = await fetch('http://localhost:8000/logout/', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCsrfToken(),
+          },
+        });
+
+        if (response.ok) {
+          console.log('User logged out successfully');
+          this.clearUser();
+          window.location.href = '/'; 
+        } else {
+          console.error('Error logging out:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error logging out:', error);
+      }
+    }
   },
 });
 
