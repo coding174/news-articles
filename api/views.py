@@ -60,8 +60,13 @@ def person_functions(request):
             'email': person.email,
             'birth_date': person.birth_date,
             'profile_image': person.profile_image.url if person.profile_image else None,
+            'favorite_categories': list(person.favorite_categories.values('id', 'name'))
         }
+        # Fetch only favorite categories for the specific user
+        favorite_category_ids = person.favorite_categories.values_list('id', flat=True)
+        favorite_categories = Category.objects.filter(id__in=favorite_category_ids)
 
+        print("User's favorite categories:", favorite_categories)
         print(person_data)
         return JsonResponse({'person': person_data})
     
@@ -83,9 +88,22 @@ def person_functions(request):
 
             user.save()
 
+            # Update favorite categories based on received JSON
+            if 'favorite_categories' in data:
+                user.favorite_categories.clear()  # Clear existing favorite categories
+                favorite_categories = data.get('favorite_categories', [])
+                for category_id in favorite_categories:
+                    category = Category.objects.get(id=category_id)
+                    user.favorite_categories.add(category)
+            user.save()
+
             return JsonResponse({'message': 'User data updated successfully'}, status=200)
+        except Category.DoesNotExist:
+            return JsonResponse({'error': 'One or more selected categories do not exist'}, status=400)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
         
 def handle_profile_image(user, new_image_data, existing_image):
     try:

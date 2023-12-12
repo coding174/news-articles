@@ -8,11 +8,22 @@
       <li v-for="category in categories" :key="category.id" @click="filterCategory(category.id)">
         {{ category.name }}
       </li>
+      <li v-if="user && user.favorite_categories && user.favorite_categories.length > 0"
+        @click="filterCategory('Favorite')">
+        Favorite Category
+      </li>
     </ul>
 
     <!-- Display filtered articles based on selected category -->
     <div v-if="selectedCategory === 'All'">
       <div v-for="article in articles" :key="article.id">
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.content }}</p>
+        <hr />
+      </div>
+    </div>
+    <div v-else-if="selectedCategory === 'Favorite'">
+      <div v-for="article in filteredArticles" :key="article.id">
         <h2>{{ article.title }}</h2>
         <p>{{ article.content }}</p>
         <hr />
@@ -29,7 +40,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent,  onMounted, computed } from "vue";
+  import { defineComponent, onMounted, computed } from "vue";
   import { useUserStore } from "../store/userStore";
   import { Category, Article } from "../store/type.ts";
 
@@ -43,7 +54,7 @@
       });
 
       return {
-        user: computed(() => userStore.user),
+        user: computed(() => userStore.user as { favorite_categories?: { id: number }[] }),
       };
     },
     data() {
@@ -51,7 +62,7 @@
         articles: [] as Article[],
         categories: [] as Category[],
         selectedCategory: 'All',
-        filteredArticles: [] as Article[], // Added a property to hold filtered articles
+        filteredArticles: [] as Article[],
       };
     },
     mounted() {
@@ -64,8 +75,8 @@
         fetch('http://localhost:8000/api/articles/')
           .then(response => response.json())
           .then(data => {
-            this.articles = data.articles; // Assuming your API response contains articles
-            this.filteredArticles = this.articles; // Initialize filteredArticles with all articles
+            this.articles = data.articles;
+            this.filteredArticles = this.articles;
           })
           .catch(error => {
             console.error('Error fetching articles:', error);
@@ -75,23 +86,28 @@
         fetch('http://localhost:8000/api/categories/')
           .then(response => response.json())
           .then(data => {
-            this.categories = data.categories; // Assuming your API response contains categories
+            this.categories = data.categories;
           })
           .catch(error => {
             console.error('Error fetching categories:', error);
           });
       },
-      filterCategory(categoryId : string) {
-        console.log('Selected Category ID:', categoryId);
+      filterCategory(categoryId: string) {
         if (categoryId === 'All') {
           this.selectedCategory = 'All';
-          this.filteredArticles = this.articles; // Show all articles if 'All' is selected
+          this.filteredArticles = this.articles;
+        } else if (categoryId === 'Favorite') {
+          this.selectedCategory = 'Favorite';
+          if (this.user && this.user.favorite_categories && this.user.favorite_categories.length > 0) {
+            const favoriteCategoryIds = this.user.favorite_categories.map(cat => cat.id);
+            this.filteredArticles = this.articles.filter(article => favoriteCategoryIds.includes(article.category_id));
+          } else {
+            this.filteredArticles = [];
+          }
         } else {
           this.selectedCategory = categoryId;
           this.filteredArticles = this.articles.filter(article => article.category_id === parseInt(categoryId, 10));
         }
-        console.log('Selected Category:', this.selectedCategory);
-        console.log('Filtered Articles:', this.filteredArticles);
       },
     },
   });

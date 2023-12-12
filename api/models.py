@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 class Person(AbstractUser):
     # Set username to None to avoid conflicts
     username = models.CharField(unique=True, max_length=255, null=True, blank=True)
@@ -9,11 +15,7 @@ class Person(AbstractUser):
     email = models.EmailField(max_length=255, unique=False)
     birth_date = models.DateField(null=True, blank=True)
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
-
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    def __str__(self):
-        return self.name
+    favorite_categories = models.ManyToManyField(Category, blank=True)
 
 class NewsArticle(models.Model):
     title = models.CharField(max_length=200)
