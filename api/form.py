@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Person
 
 class PersonForm(UserCreationForm):
@@ -11,3 +11,8 @@ class PersonForm(UserCreationForm):
     class Meta:
         model = Person
         fields = ('username', 'first_name', 'last_name', 'email', 'birth_date', 'profile_image')
+
+class ImageUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = ['profile_image']

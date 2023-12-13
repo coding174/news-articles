@@ -11,8 +11,44 @@ interface User {
 export const useUserStore = defineStore('user', {
   state: () => ({
     user: null as User | null,
+    profileImage: null as File | null,
   }),
   actions: {
+
+    async setProfileImage(formData: FormData) {
+      formData.forEach((value, key) => {
+          console.log(`${key}: ${value}`);
+      });
+
+      try {
+        const response = await fetch('http://localhost:8000/api/imageUpdate/', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'X-CSRFToken': getCsrfToken(), // Include the CSRF token in the headers
+          },
+          body: formData,
+        });
+
+        if (response.status === 200) {
+          console.log('User image updated successfully');
+
+          // Fetch and update user information in the store
+          await this.fetchUserInfo();
+        } 
+        else {
+          console.error('Error updating user image:', response.statusText);
+        }
+      } 
+      catch (error) {
+        console.error('Error updating user image:', error);
+      }
+    },
+
+    clearProfileImage() {
+      this.profileImage = null;
+    },
+    
     async fetchUserInfo() {
       try {
         // Replace 'API_ENDPOINT' with your actual API endpoint

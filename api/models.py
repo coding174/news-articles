@@ -1,5 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import datetime, os
+from PIL import Image
+
+def file_path(request, file_name):
+    filename_ext = os.path.splitext(file_name)
+    now = datetime.datetime.now()
+    file_name = "%s%s" % (now.strftime("%Y%m%d%H%M%S"), filename_ext)
+    return os.path.join('profile_image', file_name)
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -14,8 +22,9 @@ class Person(AbstractUser):
     last_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=False)
     birth_date = models.DateField(null=True, blank=True)
-    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    profile_image = models.ImageField(upload_to=file_path, null=True, blank=True)
     favorite_categories = models.ManyToManyField(Category, blank=True)
+
 
 class NewsArticle(models.Model):
     title = models.CharField(max_length=200)

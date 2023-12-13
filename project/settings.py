@@ -149,6 +149,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -165,3 +167,5 @@ AUTH_USER_MODEL = 'api.Person'
 DEBUG = True
 
 LOGIN_URL = '/accounts/login/'
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB, adjust as needed

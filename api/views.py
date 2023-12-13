@@ -4,19 +4,22 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .form import PersonForm
+from .form import PersonForm, ImageUpdateForm
 from django.shortcuts import get_object_or_404
 from .models import Category, NewsArticle, Person
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout
+import logging
+
+logger = logging.getLogger(__name__)
 
 def main_spa(request: HttpRequest) -> HttpResponse:
     return render(request, 'api/spa/index.html', {})
 
 def sign_up(request):
     if request.method == 'POST':
-        form = PersonForm(request.POST)
+        form = PersonForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             login(request, user)  # This logs in the user after successful signup
@@ -81,11 +84,7 @@ def person_functions(request):
             user.last_name = data.get('last_name', user.last_name)
             user.email = data.get('email', user.email)
             user.birth_date = data.get('birth_date', user.birth_date)
-            
-            if 'profile_image' in data:
-                # Handle profile image update separately
-                user.profile_image = handle_profile_image(user, data['profile_image'], user.profile_image)
-
+        
             user.save()
 
             # Update favorite categories based on received JSON
@@ -105,27 +104,15 @@ def person_functions(request):
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
         
-def handle_profile_image(user, new_image_data, existing_image):
-    try:
-        # Check if a new image is provided
-        if new_image_data:
-            # Update or save the new image
-            user.profile_image.save(new_image_data.name, new_image_data, save=True)
-            
-            # Delete the existing image (if any)
-            if existing_image:
-                existing_image.delete()
-
-            return user.profile_image.url
-        elif existing_image:
-            # No new image provided, return the existing image URL
-            return existing_image.url
+@login_required
+def profile_image_update(request):
+    if request.method == 'POST':
+        image_form = ImageUpdateForm(files = request.FILES, instance=request.user)
+        if image_form.is_valid():
+            image_form.save()
+            return JsonResponse({'message': 'User image updated'}, status=200)
         else:
-            # No new or existing image, return None or an appropriate default URL
-            return None
-    except Exception as e:
-        # Handle any exceptions that may occur during image handling
-        raise e
+            return JsonResponse({'error': 'User image not updated'})
 
 def logout_view(request):
     logout(request)
