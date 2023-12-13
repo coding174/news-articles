@@ -1,63 +1,41 @@
-# Template for ECS639U Group Coursework
+# ECS639U Group Coursework
 
-This template should be used as the starting point for your group coursework in the module ECS639U Web Programming (at Queen Mary University of London). Use Git (github.qmul.ac.uk) to collaborate on the coursework with your group members. Module leader: Paulo Oliva <[p.oliva@qmul.ac.uk](mailto:p.oliva@qmul.ac.uk)>
+## Group Members
 
-## Local development
+- **Dina Leel John**: 
+- **Mosam Bimal Shah**: Assigned to Users can browser news articles, and news article are grouped into categories (e.g. Sport, World, Finance,…). Users are able to select (in their profile page) their favourite news categories, and should only be shown articles within their favourite categories. Contributed to the same
+- **Zakya Farnood**: 
+- **Hajrah Mehak Butt**: 
 
-To run this project in your development machine, follow these steps:
+## Description
 
-1. Create and activate a conda environment
+This group coursework involves the collaborative development of a Single Page Application (SPA) using Django for the backend and Vue for the frontend. As a team of 4 members we were tasked with creating an online newspaper web application. The application should enable user account creation, login/logout functionalities, profile management, article browsing by categories, comment posting/replying/editing/deleting on articles, and favorite category selection for users.
 
-2. Fork this repo and clone your fork (or clone the forked repo of one of your team members), e.g.
+Key features include the use of Django's authentication framework with a custom User model, Vue routing with Vue Router, global state management using Pinia, and AJAX-based interactions for profile edits and comment management. Static typing in TypeScript for the Vue frontend and type annotations (type hints) in the Python backend are expected to support static type checking.
 
-    ```console
-    $ git clone https://github.qmul.ac.uk/<username>/cwgroup
-    ```
+## Deployed Application URL
 
-3. Install Pyhton dependencies (main folder):
+The deployed application can be accessed at [Your_Deployed_URL](https://www.example.com).
 
-    ```console
-    $ pip install -r requirements.txt
-    ```
+## Admin Page Credentials
 
-4. Create a development database:
+- **Username:** admin
+- **Password:** [password]
 
-    ```console
-    $ python manage.py migrate
-    ```
+## Test User Credentials
 
-5. Install JavaScript dependencies (from 'frontend' folder):
-
-    ```console
-    $ npm install
-    ```
-
-6. If everything is alright, you should be able to start the Django development server from the main folder:
-
-    ```console
-    $ python manage.py runserver
-    ```
-
-7. and the Vue server from the 'frontend' sub-folder:
-
-    ```console
-    $ npm run dev
-    ```
-
-8. Open your browser and go to http://localhost:5173, you will be greeted with a template page.
-
-## OpenShift deployment
-
-Once your project is ready to be deployed you will need to 'build' the Vue app and place it in Django's static folder.
-
-1. The build command in package.json and the vite.config.ts files have already been modified so that when running 'npm run build' the generated JavaScript and CSS files will be placed in the mainapp static folder, and the index.html file will be placed in the templates folder:
-
-    ```console
-    $ npm run build
-    ```
-
-2. You should then follow the instruction on QM+ on how to deploy your app on EECS's OpenShift live server.
-
-## License
-
-This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
+1. **User 1**
+   - **Username:** Bucky
+   - **Password:** [Hello123@]
+2. **User 2**
+   - **Username:** Natasha
+   - **Password:** [User2_Password]
+3. **User 3**
+   - **Username:** Tony
+   - **Password:** [Iamironman@]
+4. **User 4**
+   - **Username:** Steve
+   - **Password:** [Language!]
+5. **User 5**
+   - **Username:** Bruce
+   - **Password:** [Imalwaysangry!]
