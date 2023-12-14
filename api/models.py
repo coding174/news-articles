@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import datetime, os
-from PIL import Image
 
+# To store the profile image in the media folder
 def file_path(request, file_name):
     filename_ext = os.path.splitext(file_name)
     now = datetime.datetime.now()
@@ -15,8 +15,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+# To store the user's information
 class Person(AbstractUser):
-    # Set username to None to avoid conflicts
     username = models.CharField(unique=True, max_length=255, null=True, blank=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

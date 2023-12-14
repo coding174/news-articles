@@ -25,33 +25,23 @@ export const useUserStore = defineStore('user', {
           method: 'POST',
           credentials: 'include',
           headers: {
-            'X-CSRFToken': getCsrfToken(), // Include the CSRF token in the headers
+            'X-CSRFToken': getCsrfToken(), 
           },
           body: formData,
         });
 
         if (response.status === 200) {
           console.log('User image updated successfully');
-
-          // Fetch and update user information in the store
           await this.fetchUserInfo();
         } 
-        else {
-          console.error('Error updating user image:', response.statusText);
-        }
       } 
       catch (error) {
         console.error('Error updating user image:', error);
       }
     },
-
-    clearProfileImage() {
-      this.profileImage = null;
-    },
     
     async fetchUserInfo() {
       try {
-        // Replace 'API_ENDPOINT' with your actual API endpoint
         const response = await fetch('http://localhost:8000/api/editPersonData/', {
           method: 'GET',
           credentials: 'include'
@@ -59,7 +49,8 @@ export const useUserStore = defineStore('user', {
 
         const userData = await response.json();
         this.setUser(userData.person);
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('Error fetching user information:', error);
       }
     },
@@ -71,20 +62,17 @@ export const useUserStore = defineStore('user', {
           credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCsrfToken(), // Include the CSRF token in the headers
+            'X-CSRFToken': getCsrfToken(),
           },
           body: JSON.stringify(user),
         });
 
         if (response.ok) {
           console.log('User information updated successfully');
-
-          // Fetch and update user information in the store
           await this.fetchUserInfo();
-        } else {
-          console.error('Error updating user information:', response.statusText);
         }
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('Error updating user information:', error);
       }
     },
@@ -112,8 +100,6 @@ export const useUserStore = defineStore('user', {
           console.log('User logged out successfully');
           this.clearUser();
           window.location.href = '/'; 
-        } else {
-          console.error('Error logging out:', response.statusText);
         }
       } catch (error) {
         console.error('Error logging out:', error);

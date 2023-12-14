@@ -3,19 +3,19 @@
         <h1>Edit Profile</h1>
         <div v-if="userStore.user">
             <form @submit.prevent="updateProfile">
-                <ImageUpload />
-                <!-- Input fields for updating user information -->
+                <ImageUpload /><br>
+
                 <label for="first_name">First Name:</label>
-                <input v-model="userStore.user.first_name" type="text" id="first_name" required />
+                <input v-model="userStore.user.first_name" type="text" id="first_name" required /><br>
 
                 <label for="last_name">Last Name:</label>
-                <input v-model="userStore.user.last_name" type="text" id="last_name" required />
+                <input v-model="userStore.user.last_name" type="text" id="last_name" required /><br>
 
                 <label for="email">Email:</label>
-                <input v-model="userStore.user.email" type="email" id="email" required />
+                <input v-model="userStore.user.email" type="email" id="email" required /><br>
 
                 <label for="birth_date">Birth Date:</label>
-                <input v-model="userStore.user.birth_date" type="date" id="birth_date" required />
+                <input v-model="userStore.user.birth_date" type="date" id="birth_date" required /><br>
 
                 <label>Select Favorite Categories:</label>
                 <div v-if="categories.length > 0">
@@ -25,11 +25,11 @@
                         <label :for="`category_${category.id}`">{{ category.name }}</label>
                     </div>
                 </div>
+
                 <div v-else>
                     <p>No categories available</p>
                 </div>
 
-                <!-- Display user's chosen favorite categories -->
                 <div v-if="userData && userData.favorite_categories && userData.favorite_categories.length > 0">
                     <p>Your Favorite Categories:</p>
                     <ul>

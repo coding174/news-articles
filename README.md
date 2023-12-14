@@ -2,7 +2,7 @@
 
 ## Group Members
 
-- **Dina Leel John**: 
+- **Dina Leel John**: Assigned to Users creation, authentication and logout. The user should be able to edit all these fields in a "profile page", including their profile picture. Set-up Pinia for user management and page routing.
 - **Mosam Bimal Shah**: Assigned to Users can browser news articles, and news article are grouped into categories (e.g. Sport, World, Finance,…). Users are able to select (in their profile page) their favourite news categories, and should only be shown articles within their favourite categories. Contributed to the same
 - **Zakya Farnood**: 
 - **Hajrah Mehak Butt**: 
@@ -29,7 +29,7 @@ The deployed application can be accessed at [Your_Deployed_URL](https://www.exam
    - **Password:** [Hello123@]
 2. **User 2**
    - **Username:** Natasha
-   - **Password:** [User2_Password]
+   - **Password:** [Yolo123qwer!]
 3. **User 3**
    - **Username:** Tony
    - **Password:** [Iamironman@]

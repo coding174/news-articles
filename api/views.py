@@ -5,52 +5,49 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .form import PersonForm, ImageUpdateForm
-from django.shortcuts import get_object_or_404
 from .models import Category, NewsArticle, Person
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout
-import logging
-
-logger = logging.getLogger(__name__)
 
 def main_spa(request: HttpRequest) -> HttpResponse:
     return render(request, 'api/spa/index.html', {})
 
+# Saves the user's data to the database during signup and redirects to the home page
 def sign_up(request):
     if request.method == 'POST':
         form = PersonForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # This logs in the user after successful signup
+            login(request, user)
             return redirect('/')
     else:
         form = PersonForm()
     return render(request, 'api/spa/sign_up.html', {'form': form})
 
+# Checks the user info against the database during login and redirects to the home page
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            
-            # Use authenticate to check the user credentials
+
             user = authenticate(request, username=username, password=password)
             
             if user is not None:
-                # The user credentials are valid, log in the user
                 login(request, user)
                 return redirect('/')
     else:
         form = AuthenticationForm()
     return render(request, 'api/spa/login.html', {'form': form})
 
+# checks if the user is logged in
 def isUserLoggedIn(request):
     return (request.user.is_authenticated)
 
-# note: @login_required is a decorator that checks if the user is logged in.
 @login_required
+# Fetches information about the user and the allows to update information
 def person_functions(request):
     if request.method == 'GET':
         person = request.user
@@ -65,7 +62,6 @@ def person_functions(request):
             'profile_image': person.profile_image.url if person.profile_image else None,
             'favorite_categories': list(person.favorite_categories.values('id', 'name'))
         }
-        # Fetch only favorite categories for the specific user
         favorite_category_ids = person.favorite_categories.values_list('id', flat=True)
         favorite_categories = Category.objects.filter(id__in=favorite_category_ids)
 
@@ -79,7 +75,6 @@ def person_functions(request):
             data = json.loads(request.body)
             user = request.user
 
-            # Update user data based on the received JSON
             user.first_name = data.get('first_name', user.first_name)
             user.last_name = data.get('last_name', user.last_name)
             user.email = data.get('email', user.email)
@@ -87,9 +82,8 @@ def person_functions(request):
         
             user.save()
 
-            # Update favorite categories based on received JSON
             if 'favorite_categories' in data:
-                user.favorite_categories.clear()  # Clear existing favorite categories
+                user.favorite_categories.clear() 
                 favorite_categories = data.get('favorite_categories', [])
                 for category_id in favorite_categories:
                     category = Category.objects.get(id=category_id)
@@ -104,6 +98,7 @@ def person_functions(request):
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
         
+# Updates the user's profile image
 @login_required
 def profile_image_update(request):
     if request.method == 'POST':
@@ -114,6 +109,7 @@ def profile_image_update(request):
         else:
             return JsonResponse({'error': 'User image not updated'})
 
+# Logs the user out of the system
 def logout_view(request):
     logout(request)
     return render(request, 'api/spa/index.html')
