@@ -28,8 +28,10 @@
       <li v-for="comment in article.comments" :key="comment.id">
         <div v-if="!comment.editing">
           <span>{{ comment.content }}</span>
-          <button @click="editComment(comment)">Edit</button>
-          <button @click="deleteComment(article, comment)">Delete</button>
+          <div v-if="showButtons(comment)">
+            <button @click="editComment(comment)">Edit</button>
+            <button @click="deleteComment(article, comment)">Delete</button>
+          </div>
         </div>
         <div v-else>
           <textarea v-model="comment.updatedContent" placeholder="Edit your comment"></textarea>
@@ -94,8 +96,14 @@
       //this.fetchComments(articleId);
     },
     methods: {
+      showButtons(comment: Comment) {
+        return this.userID === Reflect.get(comment, 'user_id') || this.userID === Reflect.get(comment, 'userId');
+      },
+
       editComment(comment: Comment) {
-        if (this.userID === Reflect.get(comment, 'user_id')){
+        console.log("HELL:LLL", this.userID, Reflect.get(comment, 'user_id'))
+        console.log(comment)
+        if (this.userID === Reflect.get(comment, 'user_id') || this.userID === Reflect.get(comment, 'userId')){
           comment.editing = true;
           comment.updatedContent = comment.content;
         }
@@ -151,7 +159,7 @@
       },
 
       deleteComment(article: Article, comment: Comment) {
-        if (this.userID === Reflect.get(comment, 'user_id'))
+        if (this.userID === Reflect.get(comment, 'user_id') || this.userID === Reflect.get(comment, 'userId'))
         {console.log("Deleting comment:", comment.id);
         // Perform API call to delete the comment
         fetch(`http://localhost:8000/api/delete_comment/${comment.id}/`, {
@@ -271,7 +279,7 @@
             const newComment: Comment = {
               id: data.comment_id,
               content: content,
-              userId: data.user_id,
+              userId: Number(this.userID),
               articleId: articleId,
               createdAt: data.created_at,
             };
