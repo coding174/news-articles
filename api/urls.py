@@ -31,4 +31,8 @@ urlpatterns = [
     path('api/imageUpdate/', profile_image_update, name='profile_image_update'),
     path('api/articles/', views.get_articles, name='get_articles'), # Endpoint for fetching articles
     path('api/categories/', views.get_categories, name='get_categories'), # Endpoint for fetching categories
+    path('api/articles/<int:article_id>/comments/', views.get_comments, name='get_comments'),
+    path('api/articles/<int:article_id>/create_comment/', views.create_comment, name='create_comment'),
+    path('api/edit_comment/<int:comment_id>/', views.edit_comment, name='edit_comment'),
+    path('api/delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
 ]

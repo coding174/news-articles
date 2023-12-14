@@ -77,6 +77,7 @@
             if (userStore.user !== null) {
                 try {
                     const user = {
+                        id: userStore.user.id,
                         first_name: userStore.user.first_name,
                         last_name: userStore.user.last_name,
                         email: userStore.user.email,
@@ -86,6 +87,7 @@
                     };
                     await userStore.updateUserInfo(user);
                     isUpdateSuccessful.value = true;
+                    console.log(user)
                 }
                 catch (error) {
                     console.error('Error updating profile:', error);

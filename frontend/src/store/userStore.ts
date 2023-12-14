@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
 interface User {
+  id: number;
   first_name: '',
   last_name: '',
   email: '',
@@ -42,7 +43,7 @@ export const useUserStore = defineStore('user', {
     
     async fetchUserInfo() {
       try {
-        const response = await fetch('http://localhost:8000/api/editPersonData/', {
+        const response = await fetch('http://localhost:8000/api/getPerson/', {
           method: 'GET',
           credentials: 'include'
         });
@@ -108,7 +109,7 @@ export const useUserStore = defineStore('user', {
   },
 });
 
-const getCsrfToken = () => {
+export const getCsrfToken = () => {
   const csrfCookieName = 'csrftoken'; // Adjust with your CSRF token cookie name
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${csrfCookieName}=`);

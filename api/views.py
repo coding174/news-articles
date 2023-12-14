@@ -5,9 +5,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .form import PersonForm, ImageUpdateForm
-from .models import Category, NewsArticle, Person
+from .models import Category, NewsArticle, Person, Comment
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import logout
 
 def main_spa(request: HttpRequest) -> HttpResponse:
@@ -134,3 +136,63 @@ def get_articles(request):
 def get_categories(request):
     categories = Category.objects.all().values()  # Retrieve all categories as dictionary values
     return JsonResponse({'categories': list(categories)})  # Convert QuerySet to a list and return as JSON
+
+def get_comments(request, article_id):
+    if request.method == 'GET':
+        try:
+            article = NewsArticle.objects.get(pk=article_id)
+            comments = Comment.objects.filter(article=article).values()
+            return JsonResponse({'comments': list(comments)})
+        except NewsArticle.DoesNotExist:
+            return JsonResponse({'error': 'Article does not exist'}, status=404)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@login_required
+@require_POST
+def create_comment(request, article_id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            content = data.get('content')
+            print(content)
+            if not content:
+                return JsonResponse({'error': 'Invalid data. Please provide content for the comment.'}, status=400)
+
+            article = NewsArticle.objects.get(pk=article_id)
+            user = request.user
+
+            comment = Comment.objects.create(user=user, article=article, content=content)
+            return JsonResponse({'message': 'Comment created successfully', 'comment_id': comment.id})
+        except ObjectDoesNotExist as e:
+            return JsonResponse({'error': str(e)}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@login_required
+def edit_comment(request, comment_id):
+    if request.method == 'PUT':
+        try:
+            data = json.loads(request.body)
+            content = data.get('content')
+
+            comment = Comment.objects.get(pk=comment_id, user=request.user)
+
+            comment.content = content
+            comment.save()
+
+            return JsonResponse({'message': 'Comment updated successfully'})
+        except Comment.DoesNotExist:
+            return JsonResponse({'error': 'Comment does not exist or you are not authorized to edit this comment'}, status=404)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@login_required
+def delete_comment(request, comment_id):
+    if request.method == 'DELETE':
+        try:
+            comment = Comment.objects.get(pk=comment_id, user=request.user)
+            comment.delete()
+            return JsonResponse({'message': 'Comment deleted successfully'})
+        except Comment.DoesNotExist:
+            return JsonResponse({'error': 'Comment does not exist or you are not authorized to delete this comment'}, status=404)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
