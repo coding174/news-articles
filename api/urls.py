@@ -17,7 +17,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from django.http import HttpResponse
-from .views import main_spa, sign_up, login_view, main_spa, person_functions, isUserLoggedIn, logout_view, profile_image_update
+from .views import main_spa, post_reply, sign_up, login_view, main_spa, person_functions, isUserLoggedIn, logout_view, profile_image_update
 from . import views 
 
 urlpatterns = [
@@ -35,4 +35,5 @@ urlpatterns = [
     path('api/articles/<int:article_id>/create_comment/', views.create_comment, name='create_comment'),
     path('api/edit_comment/<int:comment_id>/', views.edit_comment, name='edit_comment'),
     path('api/delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
+    path('api/post_reply/<int:comment_id>/', post_reply, name='post_reply'),
 ]

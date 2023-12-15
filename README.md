@@ -4,8 +4,8 @@
 
 - **Dina Leel John**: Assigned to Users creation, authentication and logout. The user should be able to edit all these fields in a "profile page", including their profile picture. Set-up Pinia for user management and page routing.
 - **Mosam Bimal Shah**: Assigned to Users can browser news articles, and news article are grouped into categories (e.g. Sport, World, Finance,…). Users are able to select (in their profile page) their favourite news categories, and should only be shown articles within their favourite categories. Contributed to the same
-- **Zakya Farnood**: 
-- **Hajrah Mehak Butt**: 
+- **Zakya Farnood**: Worked through tasks 5 - 7. Worked on frontend to get users to be able to post, edit and delete comments on an article, (via Ajax) and are able to reply to previous comments on the same article. Included custom interfaces for news articles and categories. Contributed to the same.
+- **Hajrah Mehak Butt**: Worked through tasks 5 - 7. Worked on frontend to get users to be able to post, edit and delete comments on an article, (via Ajax) and are able to reply to previous comments on the same article. Included custom interfaces for news articles and categories. Contributed to the same.
 
 ## Description
 

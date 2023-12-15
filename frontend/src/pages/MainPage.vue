@@ -31,13 +31,20 @@
           <div v-if="showButtons(comment)">
             <button @click="editComment(comment)">Edit</button>
             <button @click="deleteComment(article, comment)">Delete</button>
+
           </div>
         </div>
         <div v-else>
           <textarea v-model="comment.updatedContent" placeholder="Edit your comment"></textarea>
           <button @click="saveEditedComment(article, comment)">Save</button>
           <button @click="cancelEdit(comment)">Cancel</button>
+          <button @click="doReply(comment)">Reply</button>
         </div>
+        <div v-if="comment.id === replyingToCommentId">
+        <textarea v-model="replyContent" placeholder="Type your reply here"></textarea>
+        <button @click="submitReply(comment)">Submit Reply</button>
+        <button @click="cancelReply()">Cancel</button>
+      </div>
       </li>
     </div>
   </div>
@@ -86,6 +93,9 @@
         filteredArticles: [] as Article[],
         newComment: '',
         articleComments: {} as ArticleComments,
+        replyContent: '',
+        replyMode: ref(false),
+        replyingToCommentId: ref<number | null>(null),
       };
     },
     mounted() {
@@ -321,6 +331,58 @@
             this.fetchComments(articleIdAsNumber);
           }
         }
+      },
+      doReply(comment: { id: number; content: string; userId: number; articleId: number; createdAt: { toString: () => string; toDateString: () => string; }; editing?: boolean | undefined; updatedContent?: string | undefined; }) {
+      this.replyMode = true;
+      this.replyingToCommentId = comment.id;
+      this.replyContent = ''; // Reset the reply content
+      
+      },
+      submitReply(comment: { id: number; content: string; userId: number; articleId: number; createdAt: { toString: () => string; toDateString: () => string; }; editing?: boolean | undefined; updatedContent?: string | undefined; }) {
+        console.log("Submitting reply to comment ID:", comment.id);
+
+  // Define the API URL for posting replies
+        const postReplyApiUrl = `http://localhost:8000/api/post_reply/${comment.id}/`;
+
+  // Prepare the data for the reply
+        const replyData = {
+          content: this.replyContent,
+    // Include any other necessary data
+  };
+
+  // Make an AJAX request to post the reply
+      fetch(postReplyApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCsrfToken(),  // Make sure you have a function to get CSRF token
+        },
+        body: JSON.stringify(replyData),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Reply posted:', data);
+        // Handle the successful posting of the reply
+        // For example, add the reply to the comments in the UI
+      })
+      .catch(error => {
+        console.error('Error posting reply:', error);
+      });
+
+      // Reset the reply state
+      this.replyMode = false;
+      this.replyingToCommentId = null;
+      this.replyContent = '';
+      },
+      cancelReply() {
+      this.replyMode = false;
+      this.replyingToCommentId = null;
+      this.replyContent = ''; // Reset the reply content
       },
     }
   });

@@ -196,3 +196,21 @@ def delete_comment(request, comment_id):
         except Comment.DoesNotExist:
             return JsonResponse({'error': 'Comment does not exist or you are not authorized to delete this comment'}, status=404)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+def post_reply(request, comment_id):
+    if request.method == 'POST':
+        # Extract data from request (e.g., content of the reply)
+        data = json.loads(request.body)
+        content = data.get('content')
+        # Find the parent comment
+        parent_comment = Comment.objects.get(id=comment_id)
+
+        # Create a new Comment object as a reply
+        reply_comment = Comment.objects.create(
+            article=parent_comment.article, 
+            user=request.user, 
+            content=content, 
+            parent=parent_comment
+        )
+        return JsonResponse({'message': 'Reply posted successfully', 'reply_id': reply_comment.id})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
