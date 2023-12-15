@@ -120,8 +120,8 @@ def news(request):
     categories = Category.objects.all()
     articles_by_category = {}
     for category in categories:
-        articles = NewsArticle.objects.filter(category=category) # retrieves all NewsArticle objects that belong to a specific category during each iteration through the categories
-        articles_by_category[category] = articles # NewsArticle.objects.filter(category=category): retrieves the articles for each category but assigns the queryset of filtered articles to the articles_by_category dictionary twice, which is unnecessary
+        articles = NewsArticle.objects.filter(category=category) 
+        articles_by_category[category] = articles
     
     context = {
         'articles_by_category': articles_by_category,
@@ -130,12 +130,12 @@ def news(request):
     return render(request, 'news.html', context)
 
 def get_articles(request):
-    articles = NewsArticle.objects.all().values()  # Retrieve all articles as dictionary values
+    articles = NewsArticle.objects.all().values() 
     return JsonResponse({'articles': list(articles)})  # Convert QuerySet to a list and return as JSON
 
 def get_categories(request):
-    categories = Category.objects.all().values()  # Retrieve all categories as dictionary values
-    return JsonResponse({'categories': list(categories)})  # Convert QuerySet to a list and return as JSON
+    categories = Category.objects.all().values()
+    return JsonResponse({'categories': list(categories)})
 
 def get_comments(request, article_id):
     if request.method == 'GET':

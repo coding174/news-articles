@@ -110,7 +110,7 @@ export const useUserStore = defineStore('user', {
 });
 
 export const getCsrfToken = () => {
-  const csrfCookieName = 'csrftoken'; // Adjust with your CSRF token cookie name
+  const csrfCookieName = 'csrftoken';
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${csrfCookieName}=`);
   if (parts.length === 2) {

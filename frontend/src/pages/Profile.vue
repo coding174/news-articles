@@ -159,92 +159,92 @@
 
 <style scoped>
     .edit-profile-container {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f7f7f7;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-  
+
     .edit-profile-title {
-      text-align: center;
-      font-size: 24px;
-      margin-bottom: 20px;
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
     }
-  
+
     .edit-profile-form {
-      margin-bottom: 20px;
+        margin-bottom: 20px;
     }
-  
+
     .form-container {
-      display: grid;
-      grid-gap: 10px;
+        display: grid;
+        grid-gap: 10px;
     }
-  
+
     .form-group {
-      display: flex;
-      flex-direction: column;
+        display: flex;
+        flex-direction: column;
     }
-  
+
     .form-label {
-      margin-bottom: 5px;
-      font-weight: bold;
+        margin-bottom: 5px;
+        font-weight: bold;
     }
-  
+
     .form-input {
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 16px;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
     }
-  
+
     .category-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      grid-gap: 5px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        grid-gap: 5px;
     }
-  
+
     .category-item {
-      display: flex;
-      align-items: center;
+        display: flex;
+        align-items: center;
     }
-  
+
     .category-label {
-      margin-left: 5px;
+        margin-left: 5px;
     }
-  
+
     .no-categories {
-      color: red;
+        color: red;
     }
-  
+
     .favorite-categories {
-      margin-top: 10px;
+        margin-top: 10px;
     }
-  
+
     .fav-category-item {
-      margin-left: 20px;
-      list-style: none;
+        margin-left: 20px;
+        list-style: none;
     }
-  
+
     .submit-button {
-      padding: 10px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 18px;
-      margin-top: 10px;
+        padding: 10px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        margin-top: 10px;
     }
-  
+
     .success-message {
-      color: green;
-      margin-top: 10px;
+        color: green;
+        margin-top: 10px;
     }
-  
+
     .user-not-found {
-      color: red;
+        color: red;
     }
-  </style>
+</style>

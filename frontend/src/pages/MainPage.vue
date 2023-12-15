@@ -1,3 +1,10 @@
+/**
+* Template for the main news page.
+*
+* Displays a list of news articles filtered by selected category.
+* Allows submitting and managing comments on each article.
+*/
+
 <template>
   <div class="news-container">
     <h1 class="news-header">Discover Latest News</h1>
@@ -65,7 +72,6 @@
         console.log("Component mounted");
 
         try {
-          // Use 'await' to wait for the asynchronous operation to complete
           await userStore.fetchUserInfo();
           userID.value = userStore.user?.id;
           console.log("User ID:", userID.value);
@@ -97,7 +103,6 @@
       // Fetch articles and categories from Django backend and set the data
       this.fetchArticles();
       this.fetchCategories();
-      //this.fetchComments(articleId);
     },
     methods: {
       showButtons(comment: Comment) {
@@ -119,7 +124,6 @@
         if (comment.updatedContent !== undefined && comment.updatedContent.trim() !== '') {
           console.log("Saving edited comment:", comment.updatedContent, comment);
 
-          // Assuming an API call is made to update the comment content
           const updateCommentApi = `http://localhost:8000/api/edit_comment/${comment.id}/`;
 
           fetch(updateCommentApi, {
@@ -154,11 +158,9 @@
             )
             .catch(error => {
               console.error('Error updating comment:', error);
-              // Optionally, handle the error case
             });
         } else {
           console.error('Empty comment. Cannot update.');
-          // Optionally, handle the empty comment case
         }
       },
 
@@ -197,7 +199,6 @@
         console.log("Submitting comment for article:", articleId);
         if (this.articleComments[articleId] && this.articleComments[articleId].trim() !== '') {
           this.postComment(articleId, this.articleComments[articleId]);
-          // Optionally, reset the form after submission
           this.articleComments[articleId] = '';
         } else {
           console.error('Empty comment. Cannot post a comment.');
@@ -280,7 +281,7 @@
           })
           .then(data => {
             console.log('Comment posted:', data);
-            // Add the new comment to the local data
+
             const newComment: Comment = {
               id: data.comment_id,
               content: content,

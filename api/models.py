@@ -1,6 +1,6 @@
+import datetime, os
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-import datetime, os
 
 # To store the profile image in the media folder
 def file_path(request, file_name):

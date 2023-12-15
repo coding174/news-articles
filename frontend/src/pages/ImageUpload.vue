@@ -1,10 +1,10 @@
 <template>
     <div>
         <div v-if="userStore.user">
-                <div v-if="userStore.user.profile_image" class="profile-image-container">
-                    <img :src="userImagePath()" alt="Profile Picture" class="profile_image"/>
-                </div>
-                <input type="file" id="profile_image" @change="imageUpdate" />
+            <div v-if="userStore.user.profile_image" class="profile-image-container">
+                <img :src="userImagePath()" alt="Profile Picture" class="profile_image" />
+            </div>
+            <input type="file" id="profile_image" @change="imageUpdate" />
         </div>
     </div>
 </template>
@@ -51,19 +51,19 @@
 
 <style>
     .profile-image-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
     }
 
     .profile_image {
-    border-radius: 50%; 
-    max-width: 190px; 
-    max-height: 190px;
-    width: 100%;
-    height: auto; 
-    display: block;
-    margin: 0 auto; 
+        border-radius: 50%;
+        max-width: 190px;
+        max-height: 190px;
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
     }
 </style>

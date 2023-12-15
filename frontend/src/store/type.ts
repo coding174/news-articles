@@ -21,6 +21,6 @@ export interface Comment {
     toString: () => string;
     toDateString: () => string;
   };
-  editing?: boolean; // Define the 'editing' property as optional
-  updatedContent?: string; // Define the 'updatedContent' property as optional
+  editing?: boolean;
+  updatedContent?: string;
 }

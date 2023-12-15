@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { defineComponent, onMounted} from 'vue';
+  import { defineComponent, onMounted } from 'vue';
   import { useUserStore } from '../store/userStore.ts';
 
   export default defineComponent({
