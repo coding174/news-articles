@@ -2,10 +2,10 @@
 
 ## Group Members
 
-- **Dina Leel John**: Assigned to Users creation, authentication and logout. The user should be able to edit all these fields in a "profile page", including their profile picture. Set-up Pinia for user management and page routing.
-- **Mosam Bimal Shah**: Assigned to Users can browser news articles, and news article are grouped into categories (e.g. Sport, World, Finance,…). Users are able to select (in their profile page) their favourite news categories, and should only be shown articles within their favourite categories. Contributed to the same
-- **Zakya Farnood**: 
-- **Hajrah Mehak Butt**: 
+- **Dina Leel John**: Assigned to Users creation, authentication and logout. The user should be able to edit all these fields in a "profile page", including their profile picture. Set-up Pinia for user management and set-up page routing. Worked on being able to add, edit and delete comments on news articles.
+- **Mosam Bimal Shah**: Assigned to Users can browser news articles, and news article are grouped into categories (e.g. Sport, World, Finance,…). Users are able to select (in their profile page) their favourite news categories, and should only be shown articles within their favourite categories.Worked on being able to add, edit and delete comments on news articles.
+- **Zakya Farnood**: Worked through tasks 5 - 7. Worked on frontend to get users to be able to post, edit and delete comments on an article, (via Ajax) and are able to reply to previous comments on the same article. Included custom interfaces for news articles and categories. Contributed to the same.
+- **Hajrah Mehak Butt**: Worked through tasks 5 - 7. Worked on frontend to get users to be able to post, edit and delete comments on an article, (via Ajax) and are able to reply to previous comments on the same article. Included custom interfaces for news articles and categories. Contributed to the same.
 
 ## Description
 
@@ -31,11 +31,11 @@ The deployed application can be accessed at [Your_Deployed_URL](https://www.exam
    - **Username:** Natasha
    - **Password:** [Yolo123qwer!]
 3. **User 3**
-   - **Username:** Tony
-   - **Password:** [Iamironman@]
+   - **Username:** OG_SamWilson
+   - **Password:** [captainamericadupe123!]
 4. **User 4**
-   - **Username:** Steve
-   - **Password:** [Language!]
+   - **Username:** Thor_GOT
+   - **Password:** [keepitsimple123!]
 5. **User 5**
-   - **Username:** Bruce
-   - **Password:** [Imalwaysangry!]
+   - **Username:** hawkeye_v1
+   - **Password:** [laura123!]
