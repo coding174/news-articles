@@ -164,7 +164,7 @@ INTERNAL_IPS = ['127.0.0.1']
 # To remove reverse accesssor 
 AUTH_USER_MODEL = 'api.Person'
 
-DEBUG = True
+DEBUG = False
 
 LOGIN_URL = '/accounts/login/'
 
