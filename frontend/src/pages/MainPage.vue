@@ -110,7 +110,6 @@
       },
 
       editComment(comment: Comment) {
-        console.log("HELL:LLL", this.userID, Reflect.get(comment, 'user_id'))
         console.log(comment)
         if (this.userID === Reflect.get(comment, 'user_id') || this.userID === Reflect.get(comment, 'userId')) {
           comment.editing = true;
