@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>News Articles</h1>
+  <div class="news-container">
+    <h1 class="news-header">Discover Latest News</h1>
 
     <!-- Navigation bar for categories -->
     <ul class="nav-bar">
@@ -15,30 +15,34 @@
     </ul>
 
     <!-- Display filtered articles based on selected category -->
-    <div v-for="article in filteredArticles" :key="article.id">
-      <h2>{{ article.title }}</h2>
-      <p>{{ article.content }}</p>
-      <hr />
+    <div v-for="article in filteredArticles" :key="article.id" class="article">
+      <h2 class="article-title">{{ article.title }}</h2>
+      <p class="article-content">{{ article.content }}</p>
+      <hr class="article-divider" />
       <!-- Place the comment form after each article -->
-      <form @submit.prevent="submitComment(getArticleId(article))">
-        <textarea v-model="articleComments[article.id]" placeholder="Type your comment here"></textarea>
-        <button type="submit">Submit Comment</button>
+      <form @submit.prevent="submitComment(getArticleId(article))" class="comment-form">
+        <textarea v-model="articleComments[article.id]" placeholder="Type your comment here"
+          class="comment-textarea"></textarea>
+        <button type="submit" class="comment-submit-btn">Submit Comment</button>
       </form>
       <!-- comments -->
-      <li v-for="comment in article.comments" :key="comment.id">
-        <div v-if="!comment.editing">
-          <span>{{ comment.content }}</span>
-          <div v-if="showButtons(comment)">
-            <button @click="editComment(comment)">Edit</button>
-            <button @click="deleteComment(article, comment)">Delete</button>
+      <ul class="comment-list">
+        <li v-for="comment in article.comments" :key="comment.id" class="comment">
+          <div v-if="!comment.editing" class="comment-content">
+            <span>{{ comment.content }}</span>
+            <div v-if="showButtons(comment)" class="comment-buttons">
+              <button @click="editComment(comment)" class="comment-btn">Edit</button>
+              <button @click="deleteComment(article, comment)" class="comment-btn">Delete</button>
+            </div>
           </div>
-        </div>
-        <div v-else>
-          <textarea v-model="comment.updatedContent" placeholder="Edit your comment"></textarea>
-          <button @click="saveEditedComment(article, comment)">Save</button>
-          <button @click="cancelEdit(comment)">Cancel</button>
-        </div>
-      </li>
+          <div v-else class="comment-edit">
+            <textarea v-model="comment.updatedContent" placeholder="Edit your comment"
+              class="comment-edit-textarea"></textarea>
+            <button @click="saveEditedComment(article, comment)" class="comment-edit-save-btn">Save</button>
+            <button @click="cancelEdit(comment)" class="comment-edit-cancel-btn">Cancel</button>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -55,7 +59,7 @@
   export default defineComponent({
     setup() {
       const userStore = useUserStore();
-      const userID = ref<number | undefined>(userStore.user?.id);
+      const userID = ref < number | undefined > (userStore.user?.id);
       // Call fetchUserInfo when the component is mounted or when the user logs in
       onMounted(async () => {
         console.log("Component mounted");
@@ -103,7 +107,7 @@
       editComment(comment: Comment) {
         console.log("HELL:LLL", this.userID, Reflect.get(comment, 'user_id'))
         console.log(comment)
-        if (this.userID === Reflect.get(comment, 'user_id') || this.userID === Reflect.get(comment, 'userId')){
+        if (this.userID === Reflect.get(comment, 'user_id') || this.userID === Reflect.get(comment, 'userId')) {
           comment.editing = true;
           comment.updatedContent = comment.content;
         }
@@ -137,16 +141,16 @@
             .then(updatedComment => {
               console.log('Updated comment:', updatedComment);
               // Update the local comment content after the API call succeeds
-                console.log("c", article.comments);
-                console.log("comment", comment.id);
-                const updatedCommentIndex = article.comments.findIndex(c => c.id === comment.id);
-                console.log("updatedCommentIndex:", updatedCommentIndex);
-                if (updatedCommentIndex !== -1) {
-                  article.comments[updatedCommentIndex].content = String(comment.updatedContent);
-                  article.comments[updatedCommentIndex].editing = false;
-                }
-                console.log(article.comments[updatedCommentIndex].content)
+              console.log("c", article.comments);
+              console.log("comment", comment.id);
+              const updatedCommentIndex = article.comments.findIndex(c => c.id === comment.id);
+              console.log("updatedCommentIndex:", updatedCommentIndex);
+              if (updatedCommentIndex !== -1) {
+                article.comments[updatedCommentIndex].content = String(comment.updatedContent);
+                article.comments[updatedCommentIndex].editing = false;
               }
+              console.log(article.comments[updatedCommentIndex].content)
+            }
             )
             .catch(error => {
               console.error('Error updating comment:', error);
@@ -159,29 +163,30 @@
       },
 
       deleteComment(article: Article, comment: Comment) {
-        if (this.userID === Reflect.get(comment, 'user_id') || this.userID === Reflect.get(comment, 'userId'))
-        {console.log("Deleting comment:", comment.id);
-        // Perform API call to delete the comment
-        fetch(`http://localhost:8000/api/delete_comment/${comment.id}/`, {
-          method: 'DELETE',
-          credentials: 'include',
-          headers: {
-            'X-CSRFToken': getCsrfToken(),
-          },
-        })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            // Remove the comment from the UI after successful deletion
-            const commentIndex = article.comments.findIndex(c => c.id === comment.id);
-            if (commentIndex !== -1) {
-              article.comments.splice(commentIndex, 1);
-            }
+        if (this.userID === Reflect.get(comment, 'user_id') || this.userID === Reflect.get(comment, 'userId')) {
+          console.log("Deleting comment:", comment.id);
+          // Perform API call to delete the comment
+          fetch(`http://localhost:8000/api/delete_comment/${comment.id}/`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+              'X-CSRFToken': getCsrfToken(),
+            },
           })
-          .catch(error => {
-            console.error('Error deleting comment:', error);
-          });}
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              // Remove the comment from the UI after successful deletion
+              const commentIndex = article.comments.findIndex(c => c.id === comment.id);
+              if (commentIndex !== -1) {
+                article.comments.splice(commentIndex, 1);
+              }
+            })
+            .catch(error => {
+              console.error('Error deleting comment:', error);
+            });
+        }
       },
 
       getArticleId(article: Article): number {
@@ -327,28 +332,182 @@
 </script>
 
 <style scoped>
-  /* Styling for the category navigation bar */
+  /* Styling for the overall news container */
+  .news-container {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* Styling for the header */
+  .news-header {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  /* Styling for the navigation bar */
   .nav-bar {
     list-style-type: none;
     padding: 0;
     margin: 0;
     display: flex;
     justify-content: center;
-    background-color: #f2f2f2;
+    background: linear-gradient(to right, #1a1a1a, #333333);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .nav-bar li {
-    display: inline-block;
     padding: 10px 20px;
     cursor: pointer;
-  }
-
-  .nav-bar li:first-child {
-    margin-left: 0;
-    /* Remove left margin for the first navigation item */
+    transition: all 0.3s ease;
+    color: white;
   }
 
   .nav-bar li:hover {
-    background-color: #ddd;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Styling for the articles */
+  .article {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .article-title {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .article-content {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .article-divider {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+
+  /* Styling for comments */
+  .comment-form {
+    margin-bottom: 20px;
+  }
+
+  .comment-textarea {
+    width: calc(100% - 40px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    resize: vertical;
+  }
+
+  .comment-submit-btn {
+    padding: 8px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .comment-submit-btn:hover {
+    background-color: #45a049;
+  }
+
+  .comment-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .comment {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .comment-content {
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .comment-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .comment-btn {
+    padding: 6px 12px;
+    background-color: #337ab7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .comment-btn:hover {
+    background-color: #286090;
+  }
+
+  .comment-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .comment-edit-textarea {
+    width: calc(100% - 40px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    resize: vertical;
+  }
+
+  .comment-edit-save-btn,
+  .comment-edit-cancel-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .comment-edit-save-btn {
+    background-color: #5cb85c;
+    color: white;
+  }
+
+  .comment-edit-save-btn:hover {
+    background-color: #4cae4c;
+  }
+
+  .comment-edit-cancel-btn {
+    background-color: #d9534f;
+    color: white;
+  }
+
+  .comment-edit-cancel-btn:hover {
+    background-color: #c9302c;
   }
 </style>
