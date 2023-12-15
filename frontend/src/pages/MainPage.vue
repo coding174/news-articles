@@ -31,14 +31,13 @@
           <div v-if="showButtons(comment)">
             <button @click="editComment(comment)">Edit</button>
             <button @click="deleteComment(article, comment)">Delete</button>
-
           </div>
+          <button @click="doReply(comment)">Reply</button>
         </div>
         <div v-else>
           <textarea v-model="comment.updatedContent" placeholder="Edit your comment"></textarea>
           <button @click="saveEditedComment(article, comment)">Save</button>
           <button @click="cancelEdit(comment)">Cancel</button>
-          <button @click="doReply(comment)">Reply</button>
         </div>
         <div v-if="comment.id === replyingToCommentId">
         <textarea v-model="replyContent" placeholder="Type your reply here"></textarea>
