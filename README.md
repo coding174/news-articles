@@ -4,9 +4,13 @@ This work involves the development of a Single Page Application (SPA) using Djan
 
 Key features include the use of Django's authentication framework with a custom User model, Vue routing with Vue Router, global state management using Pinia, and AJAX-based interactions for profile edits and comment management. Static typing in TypeScript for the Vue frontend and type annotations (type hints) in the Python backend are expected to support static type checking.
 
-## Deployed Application URL
+## Look of the website
+<img width="565" alt="Screenshot 2024-03-11 at 01 37 46" src="https://github.com/coding174/news-articles/assets/78309713/af1690ab-10c0-491b-8379-e447b2551ec2">
 
-The deployed application can be accessed at [Your_Deployed_URL](https://www.example.com).
+<img width="445" alt="Screenshot 2024-03-11 at 01 38 01" src="https://github.com/coding174/news-articles/assets/78309713/c00c6a31-ea08-4876-9a92-5125e3aed3ba">
+
+<img width="358" alt="Screenshot 2024-03-11 at 01 38 15" src="https://github.com/coding174/news-articles/assets/78309713/1dd9162d-9cd2-4503-9afa-15936824ae42">
+
 
 ## Admin Page Credentials
 
