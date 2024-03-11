@@ -1,6 +1,6 @@
 # Description
 
-This group coursework involves the collaborative development of a Single Page Application (SPA) using Django for the backend and Vue for the frontend. As a team of 4 members we were tasked with creating an online newspaper web application. The application should enable user account creation, login/logout functionalities, profile management, article browsing by categories, comment posting/replying/editing/deleting on articles, and favorite category selection for users.
+This work involves the development of a Single Page Application (SPA) using Django for the backend and Vue for the frontend. A online newspaper web application was created. The application should enable user account creation, login/logout functionalities, profile management, article browsing by categories, comment posting/replying/editing/deleting on articles, and favorite category selection for users.
 
 Key features include the use of Django's authentication framework with a custom User model, Vue routing with Vue Router, global state management using Pinia, and AJAX-based interactions for profile edits and comment management. Static typing in TypeScript for the Vue frontend and type annotations (type hints) in the Python backend are expected to support static type checking.
 
